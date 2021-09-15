@@ -1,58 +1,63 @@
-import { h, create, diff, patch } from 'virtual-dom'
+// * virtual node example
+var VNode = require("virtual-dom").VNode
+var createElement = require("virtual-dom").create
+var VText = require("virtual-dom/vnode/vtext")
+var h = require('virtual-dom/h')
 
-class Widget {
-  constructor() {
-    this.type = 'Widget'  // must be the string 'Widget'
-  }
-}
 
-class ACCWidget extends Widget {
-  constructor(num) {
-    super()
+// var Hook = function(){}
+// Hook.prototype.hook = function(elem, key, previousValue) {
+//   console.log("Hello from " + elem.id + "!\nMy key was: " + key)
+// }
 
-    this.num = num
-  }
+// var tagName = "div"
+// var style = "width: 100px; height: 100px; background-color: #FF0000;"
+// var attributes = {"class": "red box", style: style }
+// var key = "my-unique-red-box"
+// var namespace = "http://www.w3.org/1999/xhtml"
+// var properties = {
+//   attributes: attributes,
+//   id: "my-red-box",
+//   "a hook can have any property key": new Hook()
+// }.
+// var childNode = new VNode("div", {id: "red-box-child"})
 
-  init() {
-    return create(
-        h('div', String(this.num))
-    )
-  }
+// var RedBoxNode = new VNode(tagName, properties, [childNode], key, namespace)
+// var RedBoxElem = createElement(RedBoxNode)
+// document.body.appendChild(RedBoxElem);
 
-  update(previous) {
-    this.num += previous.num
-    return this.init()
-  }
-}
 
-let $rootNode
-let currentVTree
-let newVTree
+// * create a custom node 
 
-const newOnClick = (num) => () => {
-  const nextVTree = newVTree(num)
-  const patches = diff(currentVTree, nextVTree)
+// var RedBoxElem = createElement(new VNode('div', { style: { width: "100px", height: "100px", backgroundColor :  "#FF0000"}}));
+// document.body.appendChild(RedBoxElem);  
 
-  patch($rootNode, patches)
-  currentVTree = nextVTree
-}
 
-const onClickAdd = newOnClick(1)
-const onClickSub = newOnClick(-1)
+// * for create text
 
-newVTree = (num) => {
-  return h('div', [
-    h('div', new ACCWidget(num)),
-    h('button', {
-      onclick: onClickAdd,
-    }, '+'),
-    h('button', {
-      onclick: onClickSub,
-    }, '-'),
-  ])
-}
+// var createElement = require("virtual-dom").create
+// var myText = new VText("Hello, World")
+// Pass our VText as a child of our VNode
+// var myNode = new VNode("div", { id: "my-node" }, [myText])
 
-currentVTree = newVTree(0)
-$rootNode = create(currentVTree)
+// var myElem = createElement(myNode)
+// document.body.appendChild(myElem)
 
-document.body.appendChild($rootNode)
+// * virtual-hyperscript
+
+// 
+
+// var tree = h('div.foo#some-id', [
+//     h('span', 'some text'),
+//     h('input', { type: 'text', value: 'foo' })
+// ]);
+
+// console.log(tree);
+
+// * hooks
+// var Hook = function(){}
+// Hook.prototype.hook = function(node, propertyName, previousValue) { 
+//   console.log("Hello, World")
+// }
+// createElement(h('div', { "my-hook": new Hook() }))
+

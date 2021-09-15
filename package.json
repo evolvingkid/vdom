@@ -7,7 +7,7 @@
     "start": "webpack-dev-server --progress --colors --hot",
     "build": "webpack"
   },
-  "repository": {
+  "repository": { 
     "type": "git",
     "url": "git+https://github.com/ipluser/virtual-dom-counter-example.git"
   },
